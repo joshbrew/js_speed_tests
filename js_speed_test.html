@@ -229,7 +229,7 @@
 
                 //PRINT RESULTS
 
-                document.getElementById('msg').innerHTML = 'Results will vary widely with current browser load/prioritization + number of tests, Average ~10 tests minimum with different (larger) n:';
+                document.getElementById('msg').innerHTML = 'Results will vary widely with current browser load/prioritization + number of tests, Average ~10 tests minimum with different (larger) n. Everything past "while loop incr" subtracts the empty for loop timing for a closer estimate';
                 let resultsElm = document.getElementById('results');
                 
                 resultsElm.insertAdjacentHTML('beforeend',`<tr><th style='font-size:16px; font-weight:bold;'>Process:</th><th style='font-size:14px;'>Time (n = ${n})</th></tr>`);
@@ -238,7 +238,9 @@
                     let color = 'green';
                     if(testResults[prop] > n*0.0001) color = 'gold';
                     if(testResults[prop] > n*0.003) color = 'red';
-                    resultsElm.insertAdjacentHTML('beforeend',`<tr><td style='font-size:14px; font-weight:bold;'>${prop}:</td><td style='font-size:14px; color:${color};'>${testResults[prop].toFixed(3)} ms</td></tr>`);
+                    let time = testResults[prop];
+                    if(prop !== 'empty for loop' && prop !== 'while loop incr') time = time - testResults['empty for loop']
+                    resultsElm.insertAdjacentHTML('beforeend',`<tr><td style='font-size:14px; font-weight:bold;'>${prop}:</td><td style='font-size:14px; color:${color};'>${time.toFixed(3)} ms</td></tr>`);
                 }
                 
                 running = false;
