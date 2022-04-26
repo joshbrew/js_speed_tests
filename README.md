@@ -1,6 +1,8 @@
 # js_speed_tests
 Just an html file to toy with js function execution times. Open in browser to run.
 
+<img src="testcapture.PNG" alt="cao" width="500"/>
+
 Raw:
 ```html
 
