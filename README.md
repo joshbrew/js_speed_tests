@@ -5,7 +5,6 @@ Just an html file to toy with js function execution times. Open in browser to ru
 
 Raw:
 ```html
-
 <!DOCTYPE html>
 <html>
     <head></head>
@@ -44,62 +43,18 @@ Raw:
                 document.getElementById('msg').innerHTML = 'Awaiting results, view console for progress... Keep this window prioritized, this could take a minute...';
 
                 function speedTest(title='test',fn=()=>{},t=n) { //wraps a function in a for loop
-                    let now = performance.now();
                     console.time(title);
+                    let now = performance.now();
                     for(let i = 0; i < t; i++) {
                         fn();
                     }
                     console.timeEnd(title);
-                    return performance.now()-now;
+                    return performance.now() - now;
                 }
 
                 await delay(1000); //make sure the html update doesn't impact the speed test
 
-                title = `execute empty anonymous function`
-                testResults[title] = speedTest(title,function(){},n);
-
-                await delay();
-
-                title = `execute empty arrow function`
-                testResults[title] = speedTest(title,()=>{},n);
-
-                await delay();
-
-                title = `add`;
-                testResults[title] = speedTest(title,function(){return x = 2 + 2;},n)
-
-                await delay();
-
-                title = `multiply`;
-                testResults[title] = speedTest(title,function(){return x = 2 * 2;},n)
-
-                await delay();
-
-                title = `divide`;
-                testResults[title] = speedTest(title,function(){return x = 4 / 2;},n);
-
-                await delay();
-
-                title = `async await new promise`;
-                testResults[title] = speedTest(
-                    title,
-                    async function(){
-                    return await new Promise(function(resolve, reject){
-                        resolve(0);
-                    })
-                },n);
-
-                await delay();
-
-                title = `empty async function`;
-                testResults[title] = speedTest(
-                    title,
-                    async function(){},
-                    n
-                );
-
-                await delay();
-
+                
                 title = `empty for loop`
                 now = performance.now();
                 console.time(title);
@@ -120,6 +75,72 @@ Raw:
                 }
                 console.timeEnd(title);
                 testResults[title] = performance.now() - now;
+
+                await delay();
+
+
+
+                title = `execute empty anonymous function`
+                testResults[title] = speedTest(title,function(){},n);
+
+                await delay();
+
+                title = `execute empty arrow function`
+                testResults[title] = speedTest(title,()=>{},n);
+
+                await delay();
+
+                title = `execute empty arrow function with 3 default arguments`
+                testResults[title] = speedTest(title,(a=1,b=2,c=3)=>{},n);
+
+                await delay();
+
+                
+                title = `add two function arguments`;
+                testResults[title] = speedTest(title,function(a=1,b=2){return x = a + b;},n);
+
+                await delay();
+
+
+                title = `pass object by reference`;
+                let ref = {};
+                testResults[title] = speedTest(title,function(refin=ref){let x = refin; return x;},n);
+
+                await delay();
+
+                title = `add`;
+                testResults[title] = speedTest(title,function(){return x = 2 + 2;},n)
+
+                await delay();
+
+                title = `multiply`;
+                testResults[title] = speedTest(title,function(){return x = 2 * 2;},n)
+
+                await delay();
+
+                title = `divide`;
+                testResults[title] = speedTest(title,function(){return x = 4 / 2;},n);
+
+                await delay();
+
+
+                title = `async await new promise`;
+                testResults[title] = speedTest(
+                    title,
+                    async function(){
+                    return await new Promise(function(resolve, reject){
+                        resolve(0);
+                    })
+                },n);
+
+                await delay();
+
+                title = `empty async function`;
+                testResults[title] = speedTest(
+                    title,
+                    async function(){},
+                    n
+                );
 
                 await delay();
 
@@ -146,42 +167,29 @@ Raw:
 
 
                 title = `create array with 100 elements and .fill(0)`;
-                now = performance.now();
-                console.time(title);
-                for(let i = 0; i < n; i++) {
-                    let j = new Array(100).fill(0);
-                }
-                console.timeEnd(title);
-                testResults[title] = performance.now() - now;
+                testResults[title] = speedTest(title, function(){ let j = new Array(100).fill(0);})
 
                 await delay();
 
                 title = `create array and recursively push 100 elements`;
-                now = performance.now();
-                console.time(title);
-                for(let i = 0; i < n; i++) {
+                testResults[title] = speedTest(title, function() {
+                    
                     let o = [];
                     for(let j = 0; j < 100; j++) {
                         o.push(j);
                     }
-
-                }
-                console.timeEnd(title);
-                testResults[title] = performance.now() - now;
+                    
+                })
 
                 await delay();
 
                 title = `create object and recursively set 100 elements`;
-                now = performance.now();
-                console.time(title);
-                for(let i = 0; i < n; i++) {
+                testResults[title] = speedTest(title, function() {
                     let o = {};
                     for(let j = 0; j < 100; j++) {
                         o[j] = j;
                     }
-                }
-                console.timeEnd(title);
-                testResults[title] = performance.now() - now;
+                })
 
                 await delay();
 
