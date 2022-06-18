@@ -90,7 +90,7 @@
 
                 
                 title = `add two function arguments`;
-                testResults[title] = speedTest(title,function(a=1,b=2){return x = a + b;},n);
+                testResults[title] = speedTest(title,function(a=1,b=2){return a + b;},n);
 
                 await delay();
 
@@ -102,21 +102,86 @@
                 await delay();
 
                 title = `add`;
-                testResults[title] = speedTest(title,function(){return x = 2 + 2;},n)
+                testResults[title] = speedTest(title,function(){return 2 + 2;},n)
 
                 await delay();
 
                 title = `multiply`;
-                testResults[title] = speedTest(title,function(){return x = 2 * 2;},n)
+                testResults[title] = speedTest(title,function(){return 2 * 2;},n)
 
                 await delay();
 
                 title = `divide`;
-                testResults[title] = speedTest(title,function(){return x = 4 / 2;},n);
+                testResults[title] = speedTest(title,function(){return 4 / 2;},n);
 
                 await delay();
 
+                title = `single if evaluating true`;
+                testResults[title] = speedTest(title,function(){if(true) return; },n);
 
+                await delay();
+
+                title = `three ifs`;
+                testResults[title] = speedTest(title,function(){ 
+                    if(true) true;
+                    if(true) true;
+                    if(true) return;  
+                },n);
+
+                await delay();
+
+                title = `if else if else if then true for number`;
+                let v = 1;
+                testResults[title] = speedTest(title,function(){ 
+                    if(v === 2) return true;
+                    else if(v === 3) return true;
+                    else if(v === 1) return true;  
+                },n);
+
+                title = `typeof w === 'string' false`;
+                let w = 1;
+                testResults[title] = speedTest(title,function(){ 
+                    if(typeof w === 'string') return true;
+                    return false;
+                },n);
+
+                await delay();
+   
+                title = `Object.getPrototypeOf(x) === String.prototype true`;
+                let x = '';
+                testResults[title] = speedTest(title,function(){ 
+                    if(Object.getPrototypeOf(x) === String.prototype) return true;
+                    return false;
+                },n);
+   
+                title = `y instanceof Object false`;
+                let y = 1;
+                testResults[title] = speedTest(title,function(){ 
+                    if(y instanceof Object) return true;
+                    return false;
+                },n);
+      
+                title = `typeof y === 'object' false`;
+                testResults[title] = speedTest(title,function(){ 
+                    if(typeof y === 'object') return true;
+                    return false;
+                },n);
+      
+                title = `typeof y === 'object' false, 'object' predeclared instead of inline`;
+                let typ = 'object'
+                testResults[title] = speedTest(title,function(){ 
+                    if(typeof y === typ) return true;
+                    return false;
+                },n);
+
+                title = `z instanceof Number true`;
+                let z = 1;
+                testResults[title] = speedTest(title,function(){ 
+                    if(z instanceof Number) return true;
+                    return false;
+                },n);
+                await delay();
+                             
                 title = `async await new promise`;
                 testResults[title] = speedTest(
                     title,
