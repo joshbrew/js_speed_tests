@@ -48,19 +48,22 @@
                 await delay(1000); //make sure the html update doesn't impact the speed test
 
                 
-                title = `empty for loop`
+                title = `empty for loop`;
                 now = performance.now();
+
                 console.time(title);
                 for(let i = 0; i < n; i++) {
 
                 }
+
                 console.timeEnd(title);
                 testResults[title] = performance.now() - now;
 
                 await delay(delayExec);
 
-                title = `while loop incr`
+                title = `while loop incr`;
                 now = performance.now();
+
                 console.time(title);
                 let i = 0;
                 while(i < n) {
@@ -121,7 +124,7 @@
 
                 await delay();
 
-                title = `three ifs`;
+                title = `three ifs evaluating true`;
                 testResults[title] = speedTest(title,function(){ 
                     if(true) true;
                     if(true) true;
